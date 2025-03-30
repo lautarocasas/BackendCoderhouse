@@ -44,6 +44,20 @@ app.post('/api/products',(req,res)=>{
     }
 })
 
+
+app.put('/api/products/:pid',(req,res)=>{
+    const pid = Number(req.params.pid);
+    const updates = req.body;
+    
+    try{
+        products.updateProductById(pid,updates);
+        fm.writeJsonFile(PATH_PRODUCTS,products.getProducts());
+        res.status(200).send(`Producto con id ${pid} actualizado exitosamente`);
+    }catch(error){
+        res.status(400).send(error.message);
+    }    
+})
+
 app.listen(PORT,()=>{
     console.log(`Funcionando en http://localhost:${PORT}`);
 })

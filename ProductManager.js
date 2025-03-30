@@ -12,6 +12,27 @@ class Product
         this.status = status;
         this.category = category;
     }
+
+    update(updates){
+        for (let key in updates) {
+            if (updates[key] !== undefined && key !== 'id' && this.hasOwnProperty(key)) 
+                this[key] = updates[key];
+        }
+    }
+
+    static convertArrayToProducts(productsData) {
+        return productsData.map(productData => new Product(
+            productData.id,
+            productData.title,
+            productData.description,
+            productData.price,
+            productData.thumbnails,
+            productData.code,
+            productData.stock,
+            productData.status,
+            productData.category
+        ));
+    }
 }
 
 class ProductManager
@@ -19,12 +40,13 @@ class ProductManager
     constructor(productsData)
     {
         if(productsData)
-            this.products = productsData;
+            this.products = Product.convertArrayToProducts(productsData);
         else
             this.products = [];
     }
 
-    addProduct(title,description,price,thumbnails,code,stock,status,category){
+    addProduct(title,description,price,thumbnails,code,stock,status,category)
+    {
         
         if(!(title&&description&&price&&thumbnails&&code&&stock&&status&&category))
             throw new Error("Missing fields on new product"); //Missing fields
@@ -36,6 +58,18 @@ class ProductManager
         let newId = this.products.length+1;
         let newProd = new Product(newId,title,description,price,thumbnails,code,stock,status,category);
         this.products.push(newProd);
+    }
+
+    updateProductById(id,updates){
+        console.log(updates);
+        if(!id)
+            throw new Error('Missing id');
+        if(isNaN(id))
+            throw new Error('Id is not a number');
+        if(id>this.products.length || id<1)
+            throw new Error('Id out of range');
+
+        this.products[id-1].update(updates);
     }
 
     getProducts()
