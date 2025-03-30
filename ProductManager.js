@@ -61,9 +61,6 @@ class ProductManager
     }
 
     updateProductById(id,updates){
-        console.log(updates);
-        if(!id)
-            throw new Error('Missing id');
         if(isNaN(id))
             throw new Error('Id is not a number');
         if(id>this.products.length || id<1)
@@ -71,6 +68,16 @@ class ProductManager
 
         this.products[id-1].update(updates);
     }
+
+    deleteProductById(id){
+        if(isNaN(id))
+            throw new Error('Id is not a number');
+        if(id>this.products.length || id<1)
+            throw new Error('Id out of range');
+
+        this.products.splice(id-1,1);
+    }
+
 
     getProducts()
     {

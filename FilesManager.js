@@ -1,6 +1,7 @@
 const fs = require('fs');
 let isWriting = false;
 
+//Funcion para abrir archivo .json, devuelve un array con los archivos leidos
 function openJsonFile(path)
 {
     let jsonData = [];
@@ -21,10 +22,11 @@ function openJsonFile(path)
     return jsonData;
 }
 
+//Funcion para escribir un archivo .json
 function writeJsonFile(path,data)
 {
     if(isWriting){
-        return setTimeout(()=>writeJsonFile(path,data),50);
+        return setTimeout(()=>writeJsonFile(path,data),50); //Si se esta escribiendo, vuelve a intentarlo en 50mS
     }
         
     isWriting = true;

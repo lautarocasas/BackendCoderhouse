@@ -58,6 +58,18 @@ app.put('/api/products/:pid',(req,res)=>{
     }    
 })
 
+app.delete('/api/products/:pid',(req,res)=>{
+    const pid = Number(req.params.pid);
+    
+    try{
+        products.deleteProductById(pid);
+        fm.writeJsonFile(PATH_PRODUCTS,products.getProducts());
+        res.status(200).send(`Producto con id ${pid} eliminado exitosamente`);
+    }catch(error){
+        res.status(400).send(error.message);
+    }    
+});
+
 app.listen(PORT,()=>{
     console.log(`Funcionando en http://localhost:${PORT}`);
 })
