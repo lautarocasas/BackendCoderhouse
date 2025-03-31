@@ -19,7 +19,7 @@ class Cart
         this.products.push({productId,quantity});
     }
 
-    convertArrayToCarts(cartsData){
+    static convertArrayToCarts(cartsData){
         let carts = [];
         if(cartsData){
             Cart.totalCarts+=cartsData.length;
