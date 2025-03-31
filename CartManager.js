@@ -20,8 +20,12 @@ class Cart
     }
 
     convertArrayToCarts(cartsData){
-        Cart.totalCarts+=cartsData.length;
-        return cartsData.map(cart=>new Cart(cart.id,cart.products))
+        let carts = [];
+        if(cartsData){
+            Cart.totalCarts+=cartsData.length;
+            carts = cartsData.map(cart=>new Cart(cart.id,cart.products))
+        }
+        return carts;
     }
 }
 
