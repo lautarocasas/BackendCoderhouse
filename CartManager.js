@@ -1,5 +1,3 @@
-const product = require('./ProductManager.js');
-
 class Cart
 {
     static totalCarts = 0;
