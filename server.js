@@ -4,13 +4,14 @@ const PATH_CARTS = './carts.json';
 
 const fm = require('./FilesManager.js');
 const pm = require('./ProductManager.js');
+const cm = require('./CartManager.js');
 
 const products = new pm.ProductManager(fm.openJsonFile(PATH_PRODUCTS));
+const carts = cm.Cart.convertArrayToCarts(fm.openJsonFile(PATH_CARTS));
+
 const express = require('express');
 const app = express();
 
-
-const carts = fm.openJsonFile(PATH_CARTS);
 
 app.use(express.json());
 
@@ -69,6 +70,18 @@ app.delete('/api/products/:pid',(req,res)=>{
         res.status(400).send(error.message);
     }    
 });
+
+
+//Rutas para Manejo de Carritos (/api/carts/)
+app.post('/api/carts',(req,res)=>{
+    try{
+        carts.push(new cm.Cart());
+        fm.writeJsonFile(PATH_CARTS,carts);
+        res.status(200).send(`New cart created succesfully`);
+    }catch(error){
+        res.status(500).send(error.message);
+    }
+})
 
 app.listen(PORT,()=>{
     console.log(`Funcionando en http://localhost:${PORT}`);
