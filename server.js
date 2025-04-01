@@ -84,14 +84,14 @@ app.post('/api/carts',(req,res)=>{
 })
 
 app.get('/api/carts/:cid',(req,res)=>{
-    const cid = Number(req.params.cid)-1;
+    const cid = Number(req.params.cid);
     console.log(carts);
-    if(cid>=carts.length || cid<0)
+    if(cid>carts.length || cid<1)
         return res.status(404).send('Error: Id out of range');
     if(isNaN(cid))
         return res.status(400).send('Error: Id is not a number');
 
-    res.status(200).send(carts[cid]);
+    res.status(200).send(carts[cid-1]);
 })
 
 app.listen(PORT,()=>{
