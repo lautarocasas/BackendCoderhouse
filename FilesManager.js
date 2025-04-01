@@ -42,13 +42,4 @@ function writeJsonFile(path,data)
 }
 
 
-async function appendDataToFile(data,path) {
-    try{
-        await fs.appendFile(path,data);
-        console.log(`Archivo ${path} modificado correctamente`);
-    } catch(error){
-        console.error(`Error al escribir el archivo ${path}.\nDatos:\n${data}\n`,error);
-    }
-}
-
 module.exports = {openJsonFile,appendDataToFile,writeJsonFile}
