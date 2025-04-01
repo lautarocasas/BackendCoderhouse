@@ -85,13 +85,31 @@ app.post('/api/carts',(req,res)=>{
 
 app.get('/api/carts/:cid',(req,res)=>{
     const cid = Number(req.params.cid);
-    console.log(carts);
+
     if(cid>carts.length || cid<1)
         return res.status(404).send('Error: Id out of range');
     if(isNaN(cid))
         return res.status(400).send('Error: Id is not a number');
 
     res.status(200).send(carts[cid-1]);
+})
+
+app.post('/api/carts/:cid/product/:pid',(req,res)=>{
+    const cid = Number(req.params.cid);
+    const pid = Number(req.params.pid);
+
+    if(cid>carts.length || cid<1)
+        return res.status(404).send('Error: cid out of range');
+    if(isNaN(cid))
+        return res.status(400).send('Error: cid is not a number');
+
+    try{
+        carts[cid-1].addProduct(pid,1);
+        fm.writeJsonFile(PATH_CARTS,carts);
+        res.status(200).send(`Product with id ${pid} added succesfully to cart with id ${cid}`);
+    }catch(error){
+        res.status(500).send(error.message);
+    }
 })
 
 app.listen(PORT,()=>{
