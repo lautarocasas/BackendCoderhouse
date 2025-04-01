@@ -1,4 +1,8 @@
 # API E-Commerce
+Para ejecutar el proyecto, es necesario instalar las dependencias necesarias
+`npm install`
+Una vez instalado, iniciar el servidor:
+`node server.js`
 ## Endpoints para manejo de productos
 - GET /api/products
 - GET /api/products/:pid
